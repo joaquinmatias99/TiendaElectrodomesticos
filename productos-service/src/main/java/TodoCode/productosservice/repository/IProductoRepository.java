@@ -2,6 +2,8 @@ package TodoCode.productosservice.repository;
 
 import TodoCode.productosservice.model.Producto;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface IProductoRepository extends JpaRepository<Long, Producto> {
+@Repository
+public interface IProductoRepository extends JpaRepository<Producto,Long> {
 }
