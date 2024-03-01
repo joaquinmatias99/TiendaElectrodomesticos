@@ -2,13 +2,11 @@ package TodoCode.carritosservice.service;
 
 import TodoCode.carritosservice.dto.ProductoDTO;
 import TodoCode.carritosservice.model.Carrito;
-import TodoCode.carritosservice.model.Producto;
 import TodoCode.carritosservice.repository.ICarritoRepository;
 import TodoCode.carritosservice.repository.IProductosAPI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
