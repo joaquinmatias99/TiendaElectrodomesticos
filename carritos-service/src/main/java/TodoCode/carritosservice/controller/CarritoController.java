@@ -1,5 +1,6 @@
 package TodoCode.carritosservice.controller;
 
+import TodoCode.carritosservice.dto.ProductoDTO;
 import TodoCode.carritosservice.model.Carrito;
 import TodoCode.carritosservice.service.ICarritoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,31 @@ public class CarritoController {
         carritoService.saveCarrito(carrito);
         return ResponseEntity.ok("Carrito guardado exitosamente");
     }
+//BORRAR ESTE
+    @GetMapping("/getProductos")
+    public ResponseEntity<ProductoDTO> getProducto(@RequestParam Long codigoProducto) {
+        ProductoDTO producto = carritoService.getProducto((codigoProducto));
 
+            return ResponseEntity.ok(producto);
+
+    }
+
+    @PutMapping("/agregar/producto")
+    public Carrito addProductoCarrito(
+            @RequestParam Long idCarrito,
+            @RequestParam Long codigoProducto) {
+
+        return carritoService.addProductoCarrito(idCarrito, codigoProducto);
+
+    }
+    @DeleteMapping("/eliminar/producto")
+    public Carrito eliminarProductoCarrito(
+            @RequestParam Long idCarrito,
+            @RequestParam Long codigoProducto) {
+
+        return carritoService.deleteProductoCarrito(idCarrito, codigoProducto);
+
+    }
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<String> deleteCarrito(@PathVariable Long id) {
         if (carritoService.getCarritoById(id) != null) {

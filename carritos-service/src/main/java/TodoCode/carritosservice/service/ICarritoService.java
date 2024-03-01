@@ -1,6 +1,8 @@
 package TodoCode.carritosservice.service;
 
+import TodoCode.carritosservice.dto.ProductoDTO;
 import TodoCode.carritosservice.model.Carrito;
+
 
 import java.util.List;
 
@@ -10,9 +12,10 @@ public interface ICarritoService
 
     public List<Carrito> getCarritos();
 
-    public void saveProducto(Long idProducto);
+    public Carrito addProductoCarrito(Long idCarrito, Long codigoProducto);
 
-    public void deleteProducto(Long idProducto);
+    public ProductoDTO getProducto(Long codigoProducto);
+    public Carrito deleteProductoCarrito(Long idCarrito, Long codigoProducto);
     public void saveCarrito(Carrito carrito);
 
     public void deleteCarrito(Long id);

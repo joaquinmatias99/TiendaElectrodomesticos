@@ -16,9 +16,9 @@ public class ProductoController {
     @Autowired
     private IProductoService productoService;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Producto> getProductoById(@PathVariable Long id) {
-        Producto producto = productoService.getProductoById(id);
+    @GetMapping("/{codigo}")
+    public ResponseEntity<Producto> getProductoById(@PathVariable Long codigo) {
+        Producto producto = productoService.getProductoById(codigo);
         if (producto != null) {
             return ResponseEntity.ok(producto);
         } else {
@@ -38,19 +38,19 @@ public class ProductoController {
         return ResponseEntity.status(HttpStatus.CREATED).body("Producto guardado exitosamente");
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteProducto(@PathVariable Long id) {
-        if (productoService.getProductoById(id) != null) {
-            productoService.deleteProducto(id);
+    @DeleteMapping("/{codigo}")
+    public ResponseEntity<String> deleteProducto(@PathVariable Long codigo) {
+        if (productoService.getProductoById(codigo) != null) {
+            productoService.deleteProducto(codigo);
             return ResponseEntity.ok("Producto eliminado exitosamente");
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El producto no existe, no se puede eliminar");
         }
     }
-    @PutMapping("/{id}")
-    public ResponseEntity<String> editProducto(@PathVariable Long id, @RequestBody Producto producto) {
-        if (productoService.getProductoById(id) != null) {
-            productoService.editProducto(id, producto);
+    @PutMapping("/{codigo}")
+    public ResponseEntity<String> editProducto(@PathVariable Long codigo, @RequestBody Producto producto) {
+        if (productoService.getProductoById(codigo) != null) {
+            productoService.editProducto(codigo, producto);
             return ResponseEntity.ok("Producto editado exitosamente");
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El producto no existe, no se puede editar");

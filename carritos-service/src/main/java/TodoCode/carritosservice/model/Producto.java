@@ -8,18 +8,18 @@ import lombok.Setter;
 
 import java.util.List;
 
-
-@Entity
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Carrito {
+@Entity
+public class Producto
+{
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Long id;
-    private Double precioTotal;
-    @ElementCollection (fetch = FetchType.EAGER)
-    private List<Long> listaProductos;
+    private Long codigo;
+    private String nombre;
+    private Double precio;
+    private String marca;
 
-    }
+}
