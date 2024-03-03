@@ -90,17 +90,23 @@ public class CarritoService implements ICarritoService {
     }
 
     @Override
-    public void deleteCarrito(Long id) {
-        carritoRepo.deleteById(id);
+    public void deleteCarrito(Long idCarrito) {
+        carritoRepo.deleteById(idCarrito);
     }
 
     @Override
-    public void editCarrito(Long id, Carrito carrito) {
-        Carrito carritoExistente = carritoRepo.findById(id).orElse(null);
+    public void editCarrito(Long idCarrito, Carrito carrito) {
+        Carrito carritoExistente = carritoRepo.findById(idCarrito).orElse(null);
         if (carritoExistente != null) {
+            carritoExistente.setId(idCarrito);
             carritoExistente.setPrecioTotal((carrito.getPrecioTotal()));
             carritoExistente.setListaProductos((carrito.getListaProductos()));
             this.saveCarrito(carritoExistente);
         }
+    }
+
+    @Override
+    public boolean existeCarrito(Long idCarrito) {
+        return carritoRepo.existsById(idCarrito);
     }
 }

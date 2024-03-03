@@ -38,7 +38,6 @@ public class CarritoController {
         carritoService.saveCarrito(carrito);
         return ResponseEntity.ok("Carrito guardado exitosamente");
     }
-//BORRAR ESTE
     @GetMapping("/getProductos")
     public ResponseEntity<ProductoDTO> getProducto(@RequestParam Long codigoProducto) {
         ProductoDTO producto = carritoService.getProducto((codigoProducto));
@@ -81,6 +80,11 @@ public class CarritoController {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El carrito no existe, no se puede editar");
         }
+    }
+    @GetMapping("/existe/{idCarrito}")
+    public ResponseEntity<Boolean> existeCarrito(@PathVariable Long idCarrito) {
+
+        return ResponseEntity.ok(carritoService.existeCarrito(idCarrito));
     }
 
 }

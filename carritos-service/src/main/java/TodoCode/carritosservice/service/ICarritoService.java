@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ICarritoService
 {
-    public Carrito getCarritoById(Long id);
+    public Carrito getCarritoById(Long idCarrito);
 
     public List<Carrito> getCarritos();
 
@@ -18,7 +18,9 @@ public interface ICarritoService
     public Carrito deleteProductoCarrito(Long idCarrito, Long codigoProducto);
     public void saveCarrito(Carrito carrito);
 
-    public void deleteCarrito(Long id);
+    public void deleteCarrito(Long idCarrito);
 
-    public void editCarrito(Long id, Carrito carrito);
+    public void editCarrito(Long idCarrito, Carrito carrito);
+
+    boolean existeCarrito(Long idCarrito);
 }
