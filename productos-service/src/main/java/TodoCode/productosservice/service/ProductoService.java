@@ -5,6 +5,7 @@ import TodoCode.productosservice.repository.IProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 @Service
 public class ProductoService implements IProductoService
@@ -41,6 +42,20 @@ private IProductoRepository productoRepo;
             productoExistente.setPrecio(producto.getPrecio());
             this.saveProducto(productoExistente);
         }
+    }
+
+    @Override
+    public List<Long> getCodigoProductos()
+    {
+        List<Producto> productos = productoRepo.findAll();
+        List<Long> codigoProductos = new ArrayList<>();
+
+        for (Producto producto : productos)
+        {
+            codigoProductos.add(producto.getCodigo());
+        }
+        return codigoProductos;
+
     }
 
 }

@@ -15,4 +15,6 @@ public interface IProductoService
     public void deleteProducto(Long id);
 
     public void editProducto(Long id, Producto producto);
+
+    List<Long> getCodigoProductos();
 }

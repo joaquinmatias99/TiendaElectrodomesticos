@@ -86,7 +86,19 @@ public class CarritoService implements ICarritoService {
 
     @Override
     public void saveCarrito(Carrito carrito) {
-        carritoRepo.save(carrito);
+        if(existeProducto(carrito.getListaProductos()))
+        {
+            carritoRepo.save(carrito);
+        }
+        else {
+            throw new RuntimeException("No existen los productos asociados: "+carrito.getListaProductos().toString());
+        }
+    }
+
+    private boolean existeProducto(List<Long> listaProductos)
+    {
+        List<Long> codigoProductos=productosAPI.getCodigoProductos();
+        return codigoProductos.containsAll(listaProductos);
     }
 
     @Override

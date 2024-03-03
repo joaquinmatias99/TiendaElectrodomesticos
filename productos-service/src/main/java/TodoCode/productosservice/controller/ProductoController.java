@@ -31,6 +31,11 @@ public class ProductoController {
         List<Producto> productos = productoService.getProductos();
         return ResponseEntity.ok(productos);
     }
+    @GetMapping("/codigos")
+    public ResponseEntity<List<Long>> getCodigoProductos() {
+        List<Long> productos = productoService.getCodigoProductos();
+        return ResponseEntity.ok(productos);
+    }
 
     @PostMapping
     public ResponseEntity<String> saveProducto(@RequestBody Producto producto) {

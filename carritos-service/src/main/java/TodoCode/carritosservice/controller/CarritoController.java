@@ -35,8 +35,15 @@ public class CarritoController {
 
     @PostMapping("/agregar")
     public ResponseEntity<String> saveCarrito(@RequestBody Carrito carrito) {
-        carritoService.saveCarrito(carrito);
-        return ResponseEntity.ok("Carrito guardado exitosamente");
+
+        try {
+            carritoService.saveCarrito(carrito);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Carrito creado exitosamente");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al guardar el carrito: " + e.getMessage());
+        }
+
+
     }
     @GetMapping("/getProductos")
     public ResponseEntity<ProductoDTO> getProducto(@RequestParam Long codigoProducto) {
