@@ -1,9 +1,6 @@
 package TodoCode.ventasservice.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,8 +17,10 @@ public class Venta {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
+    @Temporal(TemporalType.DATE)
     private LocalDate fecha;
-    //CarritoCompras;
-    //ListaProductos
+    private Long idCarrito;
+
+
 
 }
