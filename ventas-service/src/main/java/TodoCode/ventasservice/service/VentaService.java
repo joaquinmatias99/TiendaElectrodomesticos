@@ -27,10 +27,18 @@ public class VentaService implements IVentaService{
 
     @Override
     public void saveVenta(Venta venta) {
-        //chequear si existe el carrito antes de agregarlo
+         if(existeCarrito(venta.getIdCarrito()))
+         {
             ventaRepo.save(venta);
+         }
+         else {
+             throw new RuntimeException("No existe el carrito asociado a la venta");
+         }
 
 
+    }
+    private boolean existeCarrito(Long idCarrito) {
+        return carritosAPI.existeCarrito(idCarrito);
     }
 
     @Override
@@ -40,13 +48,18 @@ public class VentaService implements IVentaService{
 
     @Override
     public void editVenta(Long id, Venta venta) {
-        Venta ventaExistente = ventaRepo.findById(id).orElse(null);
-        if (ventaExistente != null) {
-            ventaExistente.setId(id);
-            ventaExistente.setFecha(venta.getFecha());
-            ventaExistente.setIdCarrito((venta.getIdCarrito()));
+        Venta ventaExistente = ventaRepo.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("No existe la venta solicitada con id: "+id));
 
-            this.saveVenta(ventaExistente);
+        Long idCarrito = venta.getIdCarrito();
+        if (idCarrito == null || !existeCarrito(idCarrito)) {
+            throw new IllegalArgumentException("No existe el carrito con id: "+idCarrito);
         }
+
+        ventaExistente.setFecha(venta.getFecha());
+        ventaExistente.setIdCarrito(idCarrito);
+
+        this.saveVenta(ventaExistente);
     }
+
 }

@@ -33,10 +33,15 @@ public class VentaController  {
     }
 
     @PostMapping
-    public ResponseEntity<String> saveVenta(@RequestBody Venta Venta) {
-        ventaService.saveVenta(Venta);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Venta guardada exitosamente");
+    public ResponseEntity<String> saveVenta(@RequestBody Venta venta) {
+        try {
+            ventaService.saveVenta(venta);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Venta guardada exitosamente");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al guardar la venta: " + e.getMessage());
+        }
     }
+
 
     @DeleteMapping("/{idVenta}")
     public ResponseEntity<String> deleteVenta(@PathVariable Long idVenta) {
@@ -48,14 +53,17 @@ public class VentaController  {
         }
     }
     @PutMapping("/{idVenta}")
-    public ResponseEntity<String> editVenta(@PathVariable Long idVenta, @RequestBody Venta Venta) {
-        if (ventaService.getVentaById(idVenta) != null) {
-            ventaService.editVenta(idVenta, Venta);
-            return ResponseEntity.ok("Venta editado exitosamente");
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El Venta no existe, no se puede editar");
+    public ResponseEntity<String> editVenta(@PathVariable Long idVenta, @RequestBody Venta venta) {
+        try {
+            ventaService.editVenta(idVenta, venta);
+            return ResponseEntity.ok("Venta editada exitosamente");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error en editar la venta: " + e.getMessage());
+        }  catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error en editar la venta: " + e.getMessage());
         }
     }
+
 
 
 }

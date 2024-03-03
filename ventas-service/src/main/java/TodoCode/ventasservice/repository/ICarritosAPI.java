@@ -10,4 +10,7 @@ public interface ICarritosAPI
 {
     @GetMapping("/carritos/{idCarrito}")
     public CarritoDTO getCarritoById(@PathVariable("idCarrito") Long idCarrito);
+
+    @GetMapping("/carritos/existe/{idCarrito}")
+    public boolean existeCarrito(@PathVariable Long idCarrito);
 }
