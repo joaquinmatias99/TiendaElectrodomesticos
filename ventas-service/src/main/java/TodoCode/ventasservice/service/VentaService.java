@@ -3,6 +3,8 @@ package TodoCode.ventasservice.service;
 import TodoCode.ventasservice.model.Venta;
 import TodoCode.ventasservice.repository.ICarritosAPI;
 import TodoCode.ventasservice.repository.IVentaRepository;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +39,8 @@ public class VentaService implements IVentaService{
 
 
     }
+    @CircuitBreaker(name="carritos-service")
+    @Retry(name="carritos-service")
     private boolean existeCarrito(Long idCarrito) {
         return carritosAPI.existeCarrito(idCarrito);
     }
