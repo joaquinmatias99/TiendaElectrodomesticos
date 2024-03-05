@@ -96,6 +96,7 @@ public class CarritoService implements ICarritoService {
         }
     }
     @CircuitBreaker(name="producto-service")
+    @Retry(name="producto-service")
     private boolean existeProducto(List<Long> listaProductos)
     {
         List<Long> codigoProductos=productosAPI.getCodigoProductos();
