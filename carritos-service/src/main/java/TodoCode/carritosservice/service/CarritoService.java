@@ -125,7 +125,7 @@ public class CarritoService implements ICarritoService {
     }
 
 
-    public ProductoDTO fallbackGetProducto(Throwable throwable)
+    private ProductoDTO fallbackGetProducto(Throwable throwable)
     {
         return new ProductoDTO(9999999999999L, "Fallido",null);
     }
