@@ -4,6 +4,8 @@ import TodoCode.carritosservice.dto.ProductoDTO;
 import TodoCode.carritosservice.model.Carrito;
 import TodoCode.carritosservice.repository.ICarritoRepository;
 import TodoCode.carritosservice.repository.IProductosAPI;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,8 +48,9 @@ public class CarritoService implements ICarritoService {
         }
     }
 
-
     @Override
+    @CircuitBreaker(name="producto-service",fallbackMethod = "fallbackGetProducto")
+    @Retry(name="producto-service")
     public ProductoDTO getProducto(Long codigoProducto) {
         return productosAPI.getProductoById(codigoProducto);
 
@@ -55,6 +58,8 @@ public class CarritoService implements ICarritoService {
 
 
     @Override
+    @CircuitBreaker(name="producto-service")
+    @Retry(name="producto-service")
     public Carrito deleteProductoCarrito(Long idCarrito, Long codigoProducto) {
         Carrito carrito = this.getCarritoById(idCarrito);
         ProductoDTO producto = productosAPI.getProductoById(codigoProducto);
@@ -73,13 +78,9 @@ public class CarritoService implements ICarritoService {
                     return carrito;
                 }
             }
-
-
         } else {
             return null;
         }
-
-
         return null;
     }
 
@@ -94,7 +95,7 @@ public class CarritoService implements ICarritoService {
             throw new RuntimeException("No existen los productos asociados: "+carrito.getListaProductos().toString());
         }
     }
-
+    @CircuitBreaker(name="producto-service")
     private boolean existeProducto(List<Long> listaProductos)
     {
         List<Long> codigoProductos=productosAPI.getCodigoProductos();
@@ -121,4 +122,12 @@ public class CarritoService implements ICarritoService {
     public boolean existeCarrito(Long idCarrito) {
         return carritoRepo.existsById(idCarrito);
     }
+
+
+    public ProductoDTO fallbackGetProducto(Throwable throwable)
+    {
+        return new ProductoDTO(9999999999999L, "Fallido",null);
+    }
+
+
 }
