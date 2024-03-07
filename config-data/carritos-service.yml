@@ -3,8 +3,15 @@ server:
 spring:
   application:
     name: carritos-service
-  cloud:
-    eureka:
-      client:
-        service-url:
-          defaultZone: http://localhost:8761/eureka
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+  datasource:
+    url: jdbc:mysql://localhost:3306/carritos-service?serverTimezone=UTC
+    username: root
+    password: 
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
