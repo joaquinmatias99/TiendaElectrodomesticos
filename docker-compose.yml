@@ -1,0 +1,39 @@
+version: '2.1'
+
+services:
+  eureka-server:
+    container_name: eureka-server
+    image: eureka-server-app
+    build: eureka-server
+    mem_limit: 512m
+    ports:
+      - "8761:8761"
+    networks:
+      - 'tiendaelectrodomesticos-network'
+      
+  config-server:
+    container_name: config-server
+    image: config-server-app
+    build: config-server
+    mem_limit: 512m
+    ports:
+      - "8888:8888"
+    depends_on:
+      - eureka-server
+    networks:
+      - 'tiendaelectrodomesticos-network'
+      
+  api-gateway:
+    container_name: api-gateway
+    image: api-gateway-app
+    build: api-gateway
+    mem_limit: 512m
+    ports:
+      - "443:443"
+    depends_on:
+      - eureka-server
+    networks:
+      - 'tiendaelectrodomesticos-network'
+      
+networks:
+  tiendaelectrodomesticos-network:
